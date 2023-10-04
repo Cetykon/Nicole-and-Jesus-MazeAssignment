@@ -11,9 +11,12 @@ public class MazeMain {
 		ReadFile readfile = new ReadFile();
 		readfile.Read();
 		
+		//Path Tracker keeps track of path taken 
 		Stack<Integer> pathTrackerX = new Stack<Integer>();
 		Stack<Integer> pathTrackerY = new Stack<Integer>();
 		
+		//add stack to keep track of places with other possible directions
+		//Stack<Integer>  = new Stack<Integer>();
 		boolean goalReached = false;
 		
 		//add Starting position
@@ -25,13 +28,14 @@ public class MazeMain {
 		while (goalReached == false) {
 			
 			countToPop++;
+			
 			boolean isNextPathChosen = false;
 			boolean possibleUp = false;
 			boolean possibleRight = false;
 			boolean possibleDown = false;
 			boolean possibleLeft = false;
 			
-				
+			//Looking around clockwise__________________________________________________________________________________________________________				
 			try {
 				//check one up
 				if (MazeData.getMazeValue(pathTrackerX.peek() - 1,pathTrackerY.peek()) == 1) {
@@ -126,9 +130,12 @@ public class MazeMain {
 				//reset Count To pop
 				countToPop = 0;
 			}
-		
+			
+			//Just Testing__________________________________________________________________________________________________________	
+			
 			pathTrackerX.add(MazeData.getEndingX());
 			pathTrackerY.add(MazeData.getEndingY());
+			//______________________________________________________________________________________________________________________					
 			//if path has reached the goal
 			if (pathTrackerX.peek() == MazeData.getEndingX() && pathTrackerY.peek() == MazeData.getEndingY()) {
 				//set goal reached to true and print out path
@@ -141,6 +148,7 @@ public class MazeMain {
 				}
 				
 			}	
+			//_______________________________________________________________________________________________________________________
 
 		}
 	
