@@ -32,7 +32,7 @@ public class MazeMain {
 		//add Starting position to path Traker
 		pathTrackerX.add(MazeData.getStartingX());
 		pathTrackerY.add(MazeData.getStartingY());
-		//Direction tracker
+		
 	
 		
 		//for testing
@@ -62,29 +62,31 @@ public class MazeMain {
 			
 			//Looking around clockwise and checking for possible routes_______________________________________________________	
 			
-			try {
-				//check one up
-				if (MazeData.getMazeValue(pathTrackerX.peek() - 1,pathTrackerY.peek()) == 1 && pathChosen != "up") {
-					
-					//possibleUp = true;
-					
-					//Did possibility lead to a dead end
-					//if yes set possible up to false
-					if(possibleDeadEnd.peek() == "up" && wasPop == true) {
-						
-						possibleUp = false;
-					}
-					
-				}
-			} catch (Exception e) {
-				System.out.println("Nothing to check up");
-				e.printStackTrace();
-			}
+//			try {
+//				//check one up
+//				if (MazeData.getMazeValue(pathTrackerX.peek() - 1,pathTrackerY.peek()) == 1 && pathChosen != "up") {
+//					System.out.println("Check up went through");
+//					
+//					possibleUp = true;
+//					
+//					//Did possibility lead to a dead end
+//					//if yes set possible up to false
+//					if(possibleDeadEnd.peek() == "up" && wasPop == true) {
+//						
+//						possibleUp = false;
+//					}
+//					
+//				}
+//			} catch (Exception e) {
+//				System.out.println("Nothing to check up");
+//				e.printStackTrace();
+//			}
 			
 			try {
 				//check one right
-				if (MazeData.getMazeValue(pathTrackerX.peek(),pathTrackerY.peek() + 1) == 1 && pathChosen != "right") {
-						
+				if (MazeData.getMazeValue(pathTrackerX.peek(),pathTrackerY.peek() + 1) == 1) {
+					System.out.println("Check right went through");
+					
 					possibleRight = true;
 					
 					if(possibleDeadEnd.peek() == "right" && wasPop == true) {
@@ -100,8 +102,9 @@ public class MazeMain {
 			
 			try {
 				//check one down
-				if (MazeData.getMazeValue(pathTrackerX.peek() + 1,pathTrackerY.peek()) == 1 && pathChosen != "down") {
-						
+				if (MazeData.getMazeValue(pathTrackerX.peek() + 1,pathTrackerY.peek()) == 1) {
+					System.out.println("Check down went through");
+					
 					possibleDown = true;
 					
 					if(possibleDeadEnd.peek() == "down" && wasPop == true) {
@@ -113,18 +116,15 @@ public class MazeMain {
 			} catch (Exception e) {
 	
 					System.out.println("Nothing to check down");
-			
-					// TODO Auto-generated catch block
 					e.printStackTrace();
-			
-				
+
 			}
 	
 			try {
 				//check one left
-				if (MazeData.getMazeValue(pathTrackerX.peek(),pathTrackerY.peek() - 1) == 1 && pathChosen != "left") {
+				if (MazeData.getMazeValue(pathTrackerX.peek(),pathTrackerY.peek() - 1) == 1) {	
+					System.out.println("Check left went through");
 					
-										
 					possibleLeft = true;
 					
 					if(possibleDeadEnd.peek() == "left" && wasPop == true) {
@@ -174,7 +174,7 @@ public class MazeMain {
 			}
 			else {
 				//use countTopop to pop stack 
-				for (int i = 0; i< countToPop; i++) {
+				for (int i = 0; i< countToPop-1; i++) {
 					pathTrackerX.pop();
 					 pathTrackerY.pop();
 					
