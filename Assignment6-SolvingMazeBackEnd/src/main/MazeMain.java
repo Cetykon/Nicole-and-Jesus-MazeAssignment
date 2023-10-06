@@ -22,8 +22,7 @@ public class MazeMain {
 
 		//storing possible dead end choice
 		//index along with paths already chosen
-		List <wasItChosen> splitSpot = new ArrayList<wasItChosen>();
-		
+		List <wasItChosen> splitSpot = new ArrayList<wasItChosen>();	
 		//boolean to check if goal was reached
 		boolean goalReached = false;
 		
@@ -39,6 +38,7 @@ public class MazeMain {
 		int countToPop = 0;
 		//boolean to check if count was previously pop
 		boolean wasPop = false;
+		boolean startPopCount = false;
 		
 		boolean possibleUp = false;
 		boolean possibleRight = false;
@@ -54,28 +54,27 @@ public class MazeMain {
 		while (goalReached == false) {
 			
 			iterationCount++;
-		
-			countToPop++;
 			
 			System.out.println("Begining of iteration " + iterationCount);
 			
 			//if was pop is true set the doNotBackTrack equal to splitSpot saved object that corresponds to the current index
-			if (wasPop == true) {
-				
-				int foundIndex = -1;
-				//get current splitSpot set do NotBackTrack equal to it
-				for (int i = 0; i < splitSpot.size(); i++) {
-					wasItChosen spot = splitSpot.get(i);
-					//if a match is found set found index
-				    if (spot.getX() == pathTrackerX.peek() && spot.getY() == pathTrackerY.peek()) {
-				        
-				    	 foundIndex = i;
-				        break; // Exit the loop since we found a match
-				    }
-				}
-				doNotBackTrack = splitSpot.get(foundIndex);
-				
-			}
+//			if (wasPop == true) {
+//				
+//				int foundIndex = -1;
+//				//get current splitSpot set do NotBackTrack equal to it
+//				for (int i = 0; i < splitSpot.size(); i++) {
+//					wasItChosen spot = splitSpot.get(i);
+//					//if a match is found set found index
+//				    if (spot.getX() == pathTrackerX.peek() && spot.getY() == pathTrackerY.peek()) {
+//				        
+//				    	 foundIndex = i;
+//				        break; // Exit the loop since we found a match
+//				    }
+//				}
+//				if (foundIndex > 1) {
+//					doNotBackTrack = splitSpot.get(foundIndex);
+//				}
+//			}
 	
 			
 			//Looking around clockwise starting by looking up and checking for possible routes_______________________________________________________	
@@ -83,7 +82,7 @@ public class MazeMain {
 			try {
 				//check one up
 				if (MazeData.getMazeValue(pathTrackerX.peek() - 1,pathTrackerY.peek()) == 1 && doNotBackTrack.isUp() == false) {
-					System.out.println("Check up went through");
+					System.out.println("Check up if went through");
 					
 					possibleUp = true;
 					
@@ -96,7 +95,7 @@ public class MazeMain {
 			try {
 				//check one right
 				if (MazeData.getMazeValue(pathTrackerX.peek(),pathTrackerY.peek() + 1) == 1 && doNotBackTrack.isRight() == false) {
-					System.out.println("Check right went through");
+					System.out.println("Check right if went through");
 					
 					possibleRight = true;
 				
@@ -109,7 +108,7 @@ public class MazeMain {
 			try {
 				//check one down
 				if (MazeData.getMazeValue(pathTrackerX.peek() + 1,pathTrackerY.peek()) == 1 && doNotBackTrack.isDown() == false) {
-					System.out.println("Check down went through");
+					System.out.println("Check down if went through");
 					
 					possibleDown = true;
 					
@@ -124,7 +123,7 @@ public class MazeMain {
 			try {
 				//check one left
 				if (MazeData.getMazeValue(pathTrackerX.peek(),pathTrackerY.peek() - 1) == 1 && doNotBackTrack.isLeft() == false) {	
-					System.out.println("Check left went through");
+					System.out.println("Check left if went through");
 					
 					possibleLeft = true;
 					
@@ -147,6 +146,9 @@ public class MazeMain {
 			if (possibleUp == true) {
 				pathTrackerX.add(pathTrackerX.peek()- 1);
 				pathTrackerY.add(pathTrackerY.peek());
+				if (startPopCount == true) {
+					countToPop++;
+				}
 				pathChosen = "up";
 				//if the up was chosen it came from the down position so set to true
 				doNotBackTrack.setDown(true);
@@ -157,6 +159,9 @@ public class MazeMain {
 			else if (possibleRight == true) {
 				pathTrackerX.add(pathTrackerX.peek());
 				pathTrackerY.add(pathTrackerY.peek() + 1);
+				if (startPopCount == true) {
+					countToPop++;
+				}
 				pathChosen = "right";
 				//set chosen variable to false so we can store the possible ones
 				doNotBackTrack.setLeft(true);
@@ -166,6 +171,9 @@ public class MazeMain {
 			else if (possibleDown == true) {
 				pathTrackerX.add(pathTrackerX.peek() + 1);
 				pathTrackerY.add(pathTrackerY.peek());
+				if (startPopCount == true) {
+					countToPop++;
+				}
 				pathChosen = "down";
 				doNotBackTrack.setUp(true);
 				possibleDown = false;
@@ -174,6 +182,9 @@ public class MazeMain {
 			else if (possibleLeft == true) {
 				pathTrackerX.add(pathTrackerX.peek());
 				pathTrackerY.add(pathTrackerY.peek() - 1);
+				if (startPopCount == true) {
+					countToPop++;
+				}
 				pathChosen = "left";
 				doNotBackTrack.setRight(true);
 				possibleLeft = false;
@@ -198,6 +209,9 @@ public class MazeMain {
 			//if yes store coordinates
 			if (possibleUp == true || possibleRight == true || possibleDown == true || possibleLeft == true) {
 				
+				//Change later for 
+				countToPop = 0;
+				startPopCount = true;
 				//pop and store index of path just chosen to get back to split spot
 				int tempX = pathTrackerX.pop();
 				int tempY = pathTrackerY.pop();
@@ -219,16 +233,16 @@ public class MazeMain {
 					
 					if (pathChosen == "up") {
 						
-						splitSpot.get(countToPop).setUp(true);
+						splitSpot.get(foundIndex).setUp(true);
 						
 					}else if (pathChosen == "right"){
-						splitSpot.get(countToPop).setRight(true);
+						splitSpot.get(foundIndex).setRight(true);
 						
 					}else if (pathChosen == "down"){
-						splitSpot.get(countToPop).setDown(true);
+						splitSpot.get(foundIndex).setDown(true);
 						
 					}else if (pathChosen == "left"){
-						splitSpot.get(countToPop).setLeft(true);
+						splitSpot.get(foundIndex).setLeft(true);
 					}
 					
 				}
