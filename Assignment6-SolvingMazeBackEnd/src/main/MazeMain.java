@@ -60,10 +60,11 @@ public class MazeMain {
 			//if was pop is true set the doNotBackTrack equal to splitSpot saved object that corresponds to the current index
 			if (wasPop == true) {
 				
-				//doNotBackTrack = splitSpot.pop();
+				doNotBackTrack = splitSpot.pop();
 
 			}
-	
+			//reset was pop to false false after using it
+			wasPop = false;
 			
 			//Looking around clockwise starting by looking up and checking for possible routes_______________________________________________________	
 			//Excluding paths that were already taken
@@ -124,14 +125,14 @@ public class MazeMain {
 			
 			//reset doNotTrackBack
 			doNotBackTrack = new wasItChosen();
-			//reset was pop to false false after using it
-			wasPop = false;
+			
 			
 			
 			//Choose which path to take and take it__________________________________________________________________________________________
 			pathChosen = "none";
 			
 			if (possibleUp == true) {
+				
 				pathTrackerX.add(pathTrackerX.peek()- 1);
 				pathTrackerY.add(pathTrackerY.peek());
 				if (startPopCount == true) {
@@ -141,10 +142,10 @@ public class MazeMain {
 				//if the up was chosen it came from the down position so set to true
 				doNotBackTrack.setDown(true);
 				//set chosen variable to false so we can store the possible ones
-				possibleUp = false;
 				System.out.println("going up");
 			}
 			else if (possibleRight == true) {
+				
 				pathTrackerX.add(pathTrackerX.peek());
 				pathTrackerY.add(pathTrackerY.peek() + 1);
 				if (startPopCount == true) {
@@ -153,10 +154,10 @@ public class MazeMain {
 				pathChosen = "right";
 				//set chosen variable to false so we can store the possible ones
 				doNotBackTrack.setLeft(true);
-				possibleRight = false;
 				System.out.println("going right");
 			}
 			else if (possibleDown == true) {
+				
 				pathTrackerX.add(pathTrackerX.peek() + 1);
 				pathTrackerY.add(pathTrackerY.peek());
 				if (startPopCount == true) {
@@ -164,7 +165,6 @@ public class MazeMain {
 				}
 				pathChosen = "down";
 				doNotBackTrack.setUp(true);
-				possibleDown = false;
 				System.out.println("going Down");
 			}
 			else if (possibleLeft == true) {
@@ -175,16 +175,17 @@ public class MazeMain {
 				}
 				pathChosen = "left";
 				doNotBackTrack.setRight(true);
-				possibleLeft = false;
 				System.out.println("going left");
 			}
 			else {
 				//use countTopop to pop stack 
 				for (int i = 0; i< countToPop; i++) {
+					
 					pathTrackerX.pop();
 					pathTrackerY.pop();
-					
+
 				}
+				
 				//reset Count To pop
 				countToPop = 0;
 				wasPop = true;
@@ -195,37 +196,47 @@ public class MazeMain {
 			
 			//Want to check if their was more possible values__________________________________________________________________________________________			
 			//if yes store coordinates
-			if (possibleUp == true || possibleRight == true || possibleDown == true || possibleLeft == true) {
+			if ((possibleUp && possibleRight) || 
+				    (possibleUp && possibleDown) || 
+				    (possibleUp && possibleLeft) || 
+				    (possibleRight && possibleDown) || 
+				    (possibleRight && possibleLeft) || 
+				    (possibleDown && possibleLeft)) {
+				System.out.println("More than one possibility found.");
 				
 				//Change later for 
-				countToPop = 0;
+				countToPop = 1;
 				startPopCount = true;
 				
 				//Stack implementation to keep track of used paths
-//				wasItChosen temp2 =  new wasItChosen();
-//				temp2 =  doNotBackTrack;
-//				
-//				if (pathChosen == "up") {
-//				
-//					temp2.setUp(true);
-//					System.out.println(temp2.isUp());
-//					
-//				}else if (pathChosen == "right"){
-//					
-//					temp2.setRight(true);
-//					System.out.println(temp2.isRight());
-//					
-//				}else if (pathChosen == "down"){
-//					
-//					temp2.setDown(true);
-//					System.out.println(temp2.isDown());
-//					
-//				}else if (pathChosen == "left"){
-//					
-//					temp2.setLeft(true);
-//					System.out.println(temp2.isLeft());
-//				}
-//				splitSpot.add(temp2);
+				wasItChosen temp2 =  new wasItChosen();
+				temp2 =  doNotBackTrack;
+				
+				if (possibleUp == true && pathChosen == "up") {
+				
+					temp2.setUp(true);
+					System.out.println("Up Possible" + temp2.isUp());
+					
+				}
+				if (possibleRight == true && pathChosen == "right"){
+					
+					temp2.setRight(true);
+					System.out.println("Right Possible" + temp2.isRight());
+					
+				}
+				if (possibleDown == true && pathChosen == "down"){
+					
+					temp2.setDown(true);
+					System.out.println("Down Possible" + temp2.isDown());
+					
+				}
+			
+				if (possibleLeft == true && pathChosen == "left"){
+					
+					temp2.setLeft(true);
+					System.out.println("Left Possible" + temp2.isLeft());
+				}
+				splitSpot.add(temp2);
 				
 			}
 				
