@@ -22,7 +22,7 @@ public class MazeMain {
 
 		//storing possible dead end choice
 		//index along with paths already chosen
-		List <wasItChosen> splitSpot = new ArrayList<wasItChosen>();	
+		Stack<wasItChosen> splitSpot = new Stack<wasItChosen>();	
 		//boolean to check if goal was reached
 		boolean goalReached = false;
 		
@@ -58,23 +58,11 @@ public class MazeMain {
 			System.out.println("Begining of iteration " + iterationCount);
 			
 			//if was pop is true set the doNotBackTrack equal to splitSpot saved object that corresponds to the current index
-//			if (wasPop == true) {
-//				
-//				int foundIndex = -1;
-//				//get current splitSpot set do NotBackTrack equal to it
-//				for (int i = 0; i < splitSpot.size(); i++) {
-//					wasItChosen spot = splitSpot.get(i);
-//					//if a match is found set found index
-//				    if (spot.getX() == pathTrackerX.peek() && spot.getY() == pathTrackerY.peek()) {
-//				        
-//				    	 foundIndex = i;
-//				        break; // Exit the loop since we found a match
-//				    }
-//				}
-//				if (foundIndex > 1) {
-//					doNotBackTrack = splitSpot.get(foundIndex);
-//				}
-//			}
+			if (wasPop == true) {
+				
+				//doNotBackTrack = splitSpot.pop();
+
+			}
 	
 			
 			//Looking around clockwise starting by looking up and checking for possible routes_______________________________________________________	
@@ -212,73 +200,35 @@ public class MazeMain {
 				//Change later for 
 				countToPop = 0;
 				startPopCount = true;
-				//pop and store index of path just chosen to get back to split spot
-				int tempX = pathTrackerX.pop();
-				int tempY = pathTrackerY.pop();
 				
-				int foundIndex = -1;
-			
-				//check is split spot was already stored in list 
-				for (int i = 0; i < splitSpot.size(); i++) {
-					wasItChosen spot = splitSpot.get(i);
-					//if a match is found set found index
-				    if (spot.getX() == pathTrackerX.peek() && spot.getY() == pathTrackerY.peek()) {
-				        
-				    	 foundIndex = i;
-				        break; // Exit the loop since we found a match
-				    }
-				}
+				//Stack implementation to keep track of used paths
+//				wasItChosen temp2 =  new wasItChosen();
+//				temp2 =  doNotBackTrack;
+//				
+//				if (pathChosen == "up") {
+//				
+//					temp2.setUp(true);
+//					System.out.println(temp2.isUp());
+//					
+//				}else if (pathChosen == "right"){
+//					
+//					temp2.setRight(true);
+//					System.out.println(temp2.isRight());
+//					
+//				}else if (pathChosen == "down"){
+//					
+//					temp2.setDown(true);
+//					System.out.println(temp2.isDown());
+//					
+//				}else if (pathChosen == "left"){
+//					
+//					temp2.setLeft(true);
+//					System.out.println(temp2.isLeft());
+//				}
+//				splitSpot.add(temp2);
 				
-				if(foundIndex != -1) {
-					
-					if (pathChosen == "up") {
-						
-						splitSpot.get(foundIndex).setUp(true);
-						
-					}else if (pathChosen == "right"){
-						splitSpot.get(foundIndex).setRight(true);
-						
-					}else if (pathChosen == "down"){
-						splitSpot.get(foundIndex).setDown(true);
-						
-					}else if (pathChosen == "left"){
-						splitSpot.get(foundIndex).setLeft(true);
-					}
-					
-				}
-				else {
-					//if not add new spot to list
-					wasItChosen Spot = new wasItChosen();
-					
-					//we need to store both the path taken and the path we came from 
-					//so when we pop we are not using this directions as the possibilities. 
-					Spot = doNotBackTrack;
-					if (pathChosen == "up") {
-						
-						Spot.setUp(true);
-						
-					}else if (pathChosen == "right"){
-						Spot.setRight(true);
-						
-					}else if (pathChosen == "down"){
-						Spot.setDown(true);
-						
-					}else if (pathChosen == "left"){
-						Spot.setLeft(true);
-					}
-					
-					//store split spot location
-					Spot.setX(pathTrackerX.peek());  
-					Spot.setY(pathTrackerY.peek());
-					//add our spot object to the ArrayList of splitSpots
-					splitSpot.add(Spot);
-					System.out.println("splitSpot added " + Spot.getX() +" "+ Spot.getY());
-				}
-				//add current index back to pathTracker
-				pathTrackerX.add(tempX);
-				pathTrackerY.add(tempY);
 			}
-
+				
 			//Reset possibilities
 			possibleUp = false;
 			possibleRight = false;
