@@ -31,7 +31,6 @@ public class MazeMain {
 		pathTrackerY.add(MazeData.getStartingY());
 		
 	
-		
 		//keep track of integrations for testing
 		int iterationCount=0;
 		//count to pop path tracker stack if dead end is found
@@ -54,6 +53,14 @@ public class MazeMain {
 		while (goalReached == false) {
 			
 			iterationCount++;
+			
+			//reset chosen path
+			String iComeFrom = pathChosen;
+			pathChosen = "none";
+			
+			
+			
+			
 			
 			System.out.println("Begining of iteration " + iterationCount);
 			
@@ -129,7 +136,6 @@ public class MazeMain {
 			
 			
 			//Choose which path to take and take it__________________________________________________________________________________________
-			pathChosen = "none";
 			
 			if (possibleUp == true) {
 				
@@ -210,36 +216,62 @@ public class MazeMain {
 				
 				//Stack implementation to keep track of used paths
 				wasItChosen temp2 =  new wasItChosen();
-				temp2 =  doNotBackTrack;
+				//set temp2 to doNotBackTrack to acc
+				//temp2 =  doNotBackTrack;
+				
+				if (iComeFrom == "up") {
+					
+					temp2.setDown(true);
+					System.out.println(temp2.isUp());
+					
+				}
+				if (iComeFrom == "right"){
+					
+					temp2.setLeft(true);
+					System.out.println(temp2.isRight());
+					
+				}
+				if (iComeFrom == "down"){
+					
+					temp2.setUp(true);
+					System.out.println(temp2.isDown());
+					
+				}
+				if (iComeFrom == "left"){
+					
+					temp2.setRight(true);
+					System.out.println(temp2.isLeft());
+				}
+				
 				
 				if (possibleUp == true && pathChosen == "up") {
 				
 					temp2.setUp(true);
-					System.out.println("Up Possible" + temp2.isUp());
+					System.out.println(temp2.isUp());
 					
 				}
 				if (possibleRight == true && pathChosen == "right"){
 					
 					temp2.setRight(true);
-					System.out.println("Right Possible" + temp2.isRight());
+					System.out.println(temp2.isRight());
 					
 				}
 				if (possibleDown == true && pathChosen == "down"){
 					
 					temp2.setDown(true);
-					System.out.println("Down Possible" + temp2.isDown());
+					System.out.println(temp2.isDown());
 					
 				}
 			
 				if (possibleLeft == true && pathChosen == "left"){
 					
 					temp2.setLeft(true);
-					System.out.println("Left Possible" + temp2.isLeft());
+					System.out.println(temp2.isLeft());
 				}
 				splitSpot.add(temp2);
 				
 			}
-				
+			
 			//Reset possibilities
 			possibleUp = false;
 			possibleRight = false;

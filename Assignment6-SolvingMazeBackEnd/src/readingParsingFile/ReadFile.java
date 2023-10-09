@@ -10,7 +10,7 @@ public class ReadFile {
 	public void Read() {
 
 		try {
-			File temp  = new File("src/maze.txt");
+			File temp  = new File("src/maze2.txt");
 			Scanner file = new Scanner(temp);
 			
 			MazeData.setDimensionX(file.nextInt());
