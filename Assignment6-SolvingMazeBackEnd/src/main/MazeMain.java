@@ -285,11 +285,13 @@ public class MazeMain {
 				goalReached = true;
 				System.out.println("Goal Reached");
 				System.out.println("Path Taken:");
+				
+				System.out.println("Ending");
 				while (pathTrackerX.empty() != true) {
 					
 					System.out.println(pathTrackerX.pop() + " " + pathTrackerY.pop());
 				}
-				
+				System.out.println("Begining");
 			}
 			
 			
